@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, Box, Typography } from '@mui/material';
+import { Container, TextField, Button, Box, Typography, CircularProgress } from '@mui/material';
 import API from '../utils/api';
 
 const Login = () => {
+  const [loader, setLoader] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -25,20 +26,21 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true)
     try {
       const res = await API.post('/users/login', formData);
       console.log(res)
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('name',res.data.name)
-      localStorage.setItem('avatar',res.data.avatar)
-      localStorage.setItem('id',res.data.id)
-      localStorage.setItem('email',res.data.email)
-      localStorage.setItem('rollNumber',res.data.rollNumber)
-      localStorage.setItem('grade',res.data.grade)
-      localStorage.setItem('role',res.data.role)
-      
+      localStorage.setItem('name', res.data.name)
+      localStorage.setItem('avatar', res.data.avatar)
+      localStorage.setItem('id', res.data.id)
+      localStorage.setItem('email', res.data.email)
+      localStorage.setItem('rollNumber', res.data.rollNumber)
+      localStorage.setItem('grade', res.data.grade)
+      localStorage.setItem('role', res.data.role)
+
       if (res?.data?.role === 'admin') {
-        
+
         navigate('/admin-dashboard');
       } else if (res?.data?.role === 'user') {
         navigate('/user-dashboard');
@@ -47,7 +49,7 @@ const Login = () => {
       console.error(err.response.data);
     }
   };
-  
+
 
   return (
     <Container maxWidth="xs">
@@ -83,7 +85,9 @@ const Login = () => {
             required
           />
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Login
+            {loader ?
+              <CircularProgress size={24} color="inherit" />
+              : "Login"}
           </Button>
         </form>
       </Box>

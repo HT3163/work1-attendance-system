@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, Box, Typography, Avatar, Grid } from '@mui/material';
+import { Container, TextField, Button, Box, Typography, Avatar, Grid,CircularProgress } from '@mui/material';
 import API from '../utils/api';
 
 const Register = () => {
+  const [loader, setLoader] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,22 +33,22 @@ const Register = () => {
     data.append("upload_preset", "oo76bqt8");
     console.log(data)
     try {
-        
-        let res = await fetch("https://api.cloudinary.com/v1_1/dvrxdremd/image/upload", {
-            method: "post",
-            body: data,
-        });
-        const urlData = await res.json();
-        
-        return urlData.url;
+
+      let res = await fetch("https://api.cloudinary.com/v1_1/dvrxdremd/image/upload", {
+        method: "post",
+        body: data,
+      });
+      const urlData = await res.json();
+
+      return urlData.url;
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
+  }
 
   const onChange = (e) => {
     if (e.target.name === 'avatar') {
-      
+
 
       const file = e.target.files[0];
       if (file.size >= 1048576) {
@@ -64,21 +65,22 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true)
     if (!formData.avatar) return alert("Please upload your profile picture");
     const url = await uploadImage(formData.avatar);
     setFormData({ ...formData, avatar: url });
     console.log(url)
     try {
-      
-      const res = await API.post('/users/register', {formData,url})
+
+      const res = await API.post('/users/register', { formData, url })
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('name',res.data.name)
-      localStorage.setItem('avatar',res.data.avatar)
-      localStorage.setItem('id',res.data.id)
-      localStorage.setItem('email',res.data.email)
-      localStorage.setItem('rollNumber',res.data.rollNumber)
-      localStorage.setItem('grade',res.data.grade)
-      localStorage.setItem('role',res.data.role)
+      localStorage.setItem('name', res.data.name)
+      localStorage.setItem('avatar', res.data.avatar)
+      localStorage.setItem('id', res.data.id)
+      localStorage.setItem('email', res.data.email)
+      localStorage.setItem('rollNumber', res.data.rollNumber)
+      localStorage.setItem('grade', res.data.grade)
+      localStorage.setItem('role', res.data.role)
       navigate('/user-dashboard');
     } catch (err) {
       console.error(err.response.data);
@@ -167,8 +169,11 @@ const Register = () => {
             </Grid>
             <Grid item xs={12}>
               <Button type="submit" variant="contained" color="primary" fullWidth>
-                Register
+                {loader ?
+                  <CircularProgress size={24} color="inherit" />
+                  : "Register"}
               </Button>
+              
             </Grid>
           </Grid>
         </form>
