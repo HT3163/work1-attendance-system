@@ -1,0 +1,137 @@
+.dashboard {
+    display: flex;
+}
+input[type='date'], input[type='text'] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 50px;
+}
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-top: 20px;
+}
+.menuHover:hover{
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.118);
+}
+.sidebar h3 {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile span {
+    margin-right: 10px;
+}
+
+.content {
+    padding: 20px;
+    background-color: #fff;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+
+
+
+/* styles.css */
+.sidebar {
+    display: block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-hidden {
+    /* transform: translateX(-100%); */
+    display: none;
+}
+
+.menu-visible {
+    /* transform: translateX(0); */
+    display: block;
+}
+
+.toggle-button {
+    /* display: none; */
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+}
+
+@media (max-width: 400px) {
+    body{
+        font-size: 15px;
+    }
+    /* .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 150px;
+        height: 100%;
+        background-color: white;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+    } */
+
+    /* .toggle-button {
+        display: block;
+    } */
+    
+}
+
